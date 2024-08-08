@@ -1,5 +1,5 @@
 # 빌드 구문
-# pyinstaller --onefile --noconsole --icon=app_icon.ico --add-data "app_icon.png;." main.py
+# pyinstaller --onefile --noconsole --icon=app_icon.ico --add-data "app_icon.png;." --name "[Simple Diary]" main.py
 
 import sys
 import os
@@ -14,7 +14,7 @@ class SimpleDiaryApp(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.setWindowTitle('Simple Diary')
+        self.setWindowTitle('비서 레오나')
 
         # 아이콘 설정
         icon_path = self.resource_path('app_icon.png')
