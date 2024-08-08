@@ -1,17 +1,24 @@
+# 빌드 구문
+# pyinstaller --onefile --noconsole --icon=app_icon.ico --add-data "app_icon.png;." main.py
+
 import sys
 import os
 import csv
 from datetime import datetime
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLineEdit, QPushButton, QComboBox
+from PyQt5.QtGui import QIcon
 
 class SimpleDiaryApp(QWidget):
     def __init__(self):
         super().__init__()
-
         self.initUI()
 
     def initUI(self):
         self.setWindowTitle('Simple Diary')
+
+        # 아이콘 설정
+        icon_path = self.resource_path('app_icon.png')
+        self.setWindowIcon(QIcon(icon_path))
 
         # 레이아웃 설정
         layout = QVBoxLayout()
@@ -39,6 +46,15 @@ class SimpleDiaryApp(QWidget):
         layout.addLayout(h_layout)
         self.setLayout(layout)
 
+    def resource_path(self, relative_path):
+        """ PyInstaller로 패키징된 후에도 리소스를 찾기 위한 경로 설정 """
+        try:
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
+
     def save_entry(self):
         # 현재 날짜와 시간
         now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -52,7 +68,7 @@ class SimpleDiaryApp(QWidget):
         # 데이터가 비어 있지 않은지 확인
         if content.strip():
             # 저장할 파일 경로 설정
-            file_path = os.path.join(os.path.dirname(__file__), 'simple diary data.tsv')
+            file_path = os.path.join(os.path.dirname(sys.executable), 'simple diary data.tsv')
 
             # 파일에 데이터 저장
             with open(file_path, 'a', newline='', encoding='utf-8') as file:
