@@ -1,5 +1,5 @@
 # 빌드 구문
-# pyinstaller --onefile --noconsole --icon=app_icon.ico --add-data "app_icon.png;." --name "[Simple Diary]" main.py
+# pyinstaller --onefile --noconsole --icon=app_icon.ico --add-data "app_icon.png;." --name "Simple Diary" main.py
 
 import sys
 import os
